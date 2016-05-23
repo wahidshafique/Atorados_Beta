@@ -10,6 +10,9 @@ public class PullCheck : MonoBehaviour {
     }
     // Update is called once per frame
     void Update() {
+        if (Input.GetKeyDown(KeyCode.X) && this.gameObject.GetComponent<FixedJoint>() != null) {
+            Destroy(this.gameObject.GetComponent<FixedJoint>());
+        }
         if (colFlag)
             this.gameObject.GetComponent<Renderer>().material.color = Color.red;
     }
@@ -20,10 +23,10 @@ public class PullCheck : MonoBehaviour {
             if (hit.collider.gameObject.tag == "Object") {
                 colFlag = false;
                 this.gameObject.GetComponent<Renderer>().material.color = Color.black;
-                if (Input.GetKeyDown(KeyCode.Space)){
-                    this.gameObject.AddComponent<SpringJoint>().connectedBody = hit.collider.gameObject.GetComponent<Rigidbody>();
-                } else if (Input.GetKeyDown(KeyCode.X)) {
-                    Destroy(this.gameObject.GetComponent<SpringJoint>());
+                if (Input.GetKeyDown(KeyCode.Space)) {
+                    hit.collider.gameObject.GetComponent<Rigidbody>().freezeRotation = true;
+                    this.gameObject.AddComponent<FixedJoint>().connectedBody = hit.collider.gameObject.GetComponent<Rigidbody>();
+                    this.gameObject.GetComponent<FixedJoint>().enableCollision = true;
                 }
                 print("pull me up");
             }
