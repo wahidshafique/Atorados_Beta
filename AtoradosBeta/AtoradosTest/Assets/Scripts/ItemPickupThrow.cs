@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class ItemPickupThrow : MonoBehaviour {
-
+    int items = 0;
 	// Use this for initialization
 	void Start () {
 	
@@ -12,4 +12,12 @@ public class ItemPickupThrow : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    void OnCollisionEnter(Collision other) {
+        if (other.collider.name == "Pickup") {
+            Destroy(other.gameObject);
+            items++;
+            print("got item");
+        }
+    }
 }
